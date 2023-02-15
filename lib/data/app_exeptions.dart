@@ -1,9 +1,12 @@
 class AppExeption implements Exception {
+  // ignore: prefer_typing_uninitialized_variables
   final _message;
+  // ignore: prefer_typing_uninitialized_variables
   final _prefix;
 
   AppExeption([this._message, this._prefix]);
 
+  // ignore: annotate_overrides
   String toString() {
     return '$_prefix$_message';
   }

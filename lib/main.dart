@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_location/view_model/auth_view_model.dart';
+import 'package:flutter_application_location/view_model/scanner_view_model.dart';
+import 'package:flutter_application_location/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 import 'utils/routes/routes.dart';
 import 'utils/routes/routes_name.dart';
@@ -12,10 +16,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: RoutesName.login,
-      onGenerateRoute: Routes.generateRoute,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => ScannerViewModel()),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: RoutesName.splash,
+        onGenerateRoute: Routes.generateRoute,
+      ),
     );
   }
 }

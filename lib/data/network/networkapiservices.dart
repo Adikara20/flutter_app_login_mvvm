@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import '../app_exeptions.dart';
 import 'baseapiservices.dart';
 
@@ -25,9 +27,13 @@ class NetworkService extends BaseApiServices {
   @override
   Future getPostApiResponse(String url, dynamic data) async {
     dynamic responseJson;
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+    };
+    final dataEncode = jsonEncode(data);
     try {
       Response response = await http
-          .post(Uri.parse(url), body: data)
+          .post(Uri.parse(url), body: dataEncode, headers: requestHeaders)
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
@@ -41,6 +47,10 @@ class NetworkService extends BaseApiServices {
     switch (response.statusCode) {
       case 200:
         dynamic responseJson = jsonDecode(response.body);
+        if (kDebugMode) {
+          print("cek returnResponse${response.statusCode}");
+          print(response.toString());
+        }
         return responseJson;
       case 400:
         throw BadRequestExeption(response.body.toString());
@@ -48,9 +58,7 @@ class NetworkService extends BaseApiServices {
         throw UnautoriseExeption(response.body.toString());
       default:
         throw FetchDataExeption(
-            'Error accured while comminocation with server' +
-                'with status code' +
-                response.statusCode.toString());
+            'Error accured while comminocation with server with status code${response.statusCode}');
     }
   }
 }

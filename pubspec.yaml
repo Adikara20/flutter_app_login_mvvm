@@ -40,6 +40,11 @@ dependencies:
   provider: ^6.0.5
   fluttertoast: ^8.1.2
   another_flushbar: ^1.12.29
+  shared_preferences: ^2.0.17
+  mobile_scanner: ^2.1.0
+  sqflite: ^2.2.4+1
+  curved_navigation_bar: ^1.0.3
+  animated_bottom_navigation_bar: ^1.1.0+1
 
 dev_dependencies:
   flutter_test:
